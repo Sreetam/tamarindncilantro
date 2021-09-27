@@ -73,6 +73,7 @@ PARAMETERS:-
 	the decay factor is calculated by using the parameters mentioned in the 13th point and are put in a formula
 	
 15.The coefficients of Transport Factor are calculated by using np.random.normal().They are as follows:
+     
      a = P(L1|L2) given the mode of transmission is air at the exact moment the disease is first detected in L2
 
      w = P(L1|L2) given the mode of transmission is water at the exact moment the disease is first detected in L2
