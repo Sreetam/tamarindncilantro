@@ -40,3 +40,69 @@ PARAMETERS:-
 6. Print the graph and susceptibilities of each node:-
 
 	g.print_graph()
+	
+
+7. For calculation of susceptibility, Decay Factor, Transport factor and weight between two edges following libraries are imported: numpy,pandas and math
+
+8. The geography matrix of 9 cities i.e temperature,rain and humidity are initiaed with certain values
+
+9. The coordinates of regions A to I are also initiated with certain coordinates
+
+10. The Euclidean distance is calculated between two cities
+      def dist(region1, region2)
+    PARAMETERS:-
+    	region1
+	region2
+
+11. Minimum distance  min_dist between two cities is found by using loops
+
+12. The susceptibility of the ith city is calculated.The susceptibility is dependent on rain, humid and temperature.
+       def calc_susceptibility(i)
+     PARAMETERS:
+        i: stands for the ith city
+	
+13. The Decay Factor is calculated by taking
+        Time t=1
+	using np.random.random() function to find the decay constants:
+	i.)tov
+	ii.)c
+	iii.)phi
+	iv.)psi
+	
+14.The above parameters are passed into the function def find_decay()
+	the decay factor is calculated by using the parameters mentioned in the 13th point and are put in a formula
+	
+15.The coefficients of Transport Factor are calculated by using np.random.normal().They are as follows:
+     a = P(L1|L2) given the mode of transmission is air at the exact moment the disease is first detected in L2
+
+     w = P(L1|L2) given the mode of transmission is water at the exact moment the disease is first detected in L2
+
+     i = P(L1|L2) given insects act as a vector at the exact moment the disease is first detected in L2
+
+     h = P(L1|L2) given humans act as a vector at the exact moment the disease is first detected in L2
+  The above parameters are the converted to numpy array.
+  
+ 16.The weight between two edges is calculated using the following function:
+      def calc_weight(x, y)
+      PARAMETERS:
+      x:region1 coordinates
+      y:region2 coordinates
+      The formula is:
+      V = Vn.D(Vn,t)  [Matrix multiplication is done using np.matmul]
+      where Vn is called Transport Factor
+      D(Vn,t) is Decay Factor
+      
+      
+
+      
+      
+       
+ 
+     
+  
+
+	
+	
+       
+               
+	
