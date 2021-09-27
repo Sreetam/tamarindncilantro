@@ -44,7 +44,7 @@ PARAMETERS:-
 
 7. For calculation of susceptibility, Decay Factor, Transport factor and weight between two edges following libraries are imported: numpy,pandas and math
 
-8. The geography matrix of 9 cities i.e temperature,rain and humidity are initiaed with certain values
+8. The geography matrix of 9 cities i.e temperature,rain and humidity are initiated with certain values
 
 9. The coordinates of regions A to I are also initiated with certain coordinates
 
