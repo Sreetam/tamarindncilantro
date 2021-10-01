@@ -41,6 +41,8 @@ rain = {'A': 211.0, 'B': 245.0, 'C': 450.0, 'D': 389.0,
         'E': 410.0, 'F': 220.0, 'G': 90.0, 'H': 113.0, 'I': 105.0}
 humid = {'A': 67.0, 'B': 58.0, 'C': 92.0, 'D': 89.0,
          'E': 85.0, 'F': 63.0, 'G': 34.0, 'H': 45.0, 'I': 38.0}
+irradiance = {'A': 67.0, 'B': 58.0, 'C': 92.0, 'D': 89.0,
+              'E': 85.0, 'F': 63.0, 'G': 34.0, 'H': 45.0, 'I': 38.0}
 
 
 # The below distance matrix is a representation of the above city
@@ -95,18 +97,12 @@ for r1 in regions.keys():
 # humid = normalise(humid)
 
 
-# This is the susceptibility array,
-# the ith element of this array represents the susceptibility value
-# of the ith city, based on environmental factors such as temperature
-susceptibility = {}
-
-
 # Function to calculate susceptibility
 # Assuming direct proportion to rainfall and humidity
 # And inverse proportion with temperature
-def calc_susceptibility(i):
-    # Return the susceptibility factor of the ith city
-    return rain[i]*humid[i]/temp[i]
+# def calc_susceptibility(i):
+# Return the susceptibility factor of the ith city
+# return rain[i]*humid[i]/temp[i]
 
 
 # Simulation Starts as time t=1
@@ -124,7 +120,7 @@ psi = np.random.random()
 def find_decay():
     # Calculate the decay as per the formula
     d = tov * np.exp(-psi*phi*t) + c
-    return np.array([d, d, d, d])
+    return np.array([[d, d, d, d]])
 
 
 # Function to find the coefficients in the Transport Factor Vn
@@ -177,35 +173,8 @@ class transmission_graph:
                     self.adj_matrix[i].append([j, calc_weight(i, j)])
 
         # Also assign the susceptibility value of each node
-        for i in regions.keys():
-            susceptibility[i] = (i, calc_susceptibility(i))
-
-    def __init__(self):
-        # n denotes the number of districts or nodes in the graph
-        # which is 9 in our case
-        self.n = 9
-        # adj_matrix is the adjacency matrix
-        # The ith row and jth column of the adjacency matrix
-        # stores the weight of the edge between ith and jth node
-        self.adj_matrix = {}
-
-        for place in regions:
-            self.adj_matrix[place] = []
-
-        self.initial()
-
-    # Function to add a new region node
-    # You have to pass (region name(string), x coordinate(float), y coordinate(float), temperature, rainfall, humidity)
-
-    def add_node(self, name, x, y, t1, r1, h1):
-        self.adj_matrix[name] = []
-
-        regions[name] = [x, y]
-        temp[name] = t1
-        rain[name] = r1
-        humid[name] = h1
-
-        self.initial()
+        # for i in regions.keys():
+        #     susceptibility[i] = (i, calc_susceptibility(i))
 
     # Function to remove a region node. You have to just pass the name of the region(string) to be removed
 
@@ -215,7 +184,55 @@ class transmission_graph:
         i = humid.pop(name)
         i = temp.pop(name)
         i = self.adj_matrix.pop(name)
-        i = susceptibility.pop(name)
+        # i = susceptibility.pop(name)
+        i = irradiance.pop(name)
+
+        self.initial()
+
+    def __init__(self):
+        # n denotes the number of districts or nodes in the graph
+        # which is 9 in our case
+        self.n = 0
+        # adj_matrix is the adjacency matrix
+        # The ith row and jth column of the adjacency matrix
+        # stores the weight of the edge between ith and jth node
+        self.adj_matrix = {}
+
+        self.E = [[np.random.random(), np.random.random(), np.random.random(), np.random.random()],
+                  [np.random.random(), np.random.random(),
+                   np.random.random(), np.random.random()],
+                  [np.random.random(), np.random.random(),
+                   np.random.random(), np.random.random()],
+                  [np.random.random(), np.random.random(), np.random.random(), np.random.random()]]
+
+        for place in regions:
+            self.adj_matrix[place] = []
+
+        self.initial()
+
+        self.remove_node("A")
+        self.remove_node("B")
+        self.remove_node("C")
+        self.remove_node("D")
+        self.remove_node("E")
+        self.remove_node("F")
+        self.remove_node("G")
+        self.remove_node("H")
+        self.remove_node("I")
+
+    # Function to add a new region node
+    # You have to pass (region name(string), x coordinate(float), y coordinate(float), temperature, rainfall, humidity)
+
+    def add_node(self, name, x, y, t1, r1, h1, i1):
+        self.adj_matrix[name] = []
+
+        regions[name] = [x, y]
+        temp[name] = t1
+        rain[name] = r1
+        humid[name] = h1
+        irradiance[name] = i1
+
+        self.n = self.n + 1
 
         self.initial()
 
@@ -233,6 +250,14 @@ class transmission_graph:
                 print(weights, end=',')
             print('\n')
 
-        print("Susceptibility of cities:-")
-        for i in susceptibility.keys():
-            print(i, ':', susceptibility[i])
+    def calc_susceptibility_score(self, node):
+        sn = [[temp[node], rain[node], humid[node], irradiance[node]]]
+        E = np.array(self.E)
+        Sn = np.array(sn)
+        Sn = Sn.transpose()
+        decay = find_decay()
+
+        x = np.matmul(decay, E)
+        y = np.matmul(x, Sn)
+
+        return y
