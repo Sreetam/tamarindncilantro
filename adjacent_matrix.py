@@ -40,27 +40,6 @@ for i in range(len(edgeList)):
 
 d  #the adjacent matrix
 
-import pandas as pd
-
-g = {
-   'A': ['A', 'B', 'C'],
-   'B': ['A', 'C', 'E'],
-   'C': ['A', 'B ', ' D '],
-   # I added a comma here 'D': [' C ', ' E '],
-   'E': [' B ', ' D ']
-}
-
-# clean up the example
-g = {
-   k: [v.strip() for v in vs]
-   for k,
-   vs in g.items()
-}
-
-edges = [(a, b) for a, bs in g.items() for b in bs]
-print(edges)
-df = pd.DataFrame(edges)
-adj_matrix = pd.crosstab(df[0], df[1])
 
 
 
