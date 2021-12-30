@@ -162,34 +162,7 @@ def calc_weight(x, y):
 
 
 class transmission_graph:
-
-    # This function initialises the graph and stores weights between each node of the graph
-    def initial(self):
-        # Iterate over each node in the graph
-        for i in regions.keys():
-            # Iterate over all the neighbours
-            for j in regions.keys():
-                if i != j:
-                    self.adj_matrix[i].append([j, calc_weight(i, j)])
-
-        # Also assign the susceptibility value of each node
-        # for i in regions.keys():
-        #     susceptibility[i] = (i, calc_susceptibility(i))
-
-    # Function to remove a region node. You have to just pass the name of the region(string) to be removed
-
-    def remove_node(self, name):
-        i = regions.pop(name)
-        i = rain.pop(name)
-        i = humid.pop(name)
-        i = temp.pop(name)
-        i = self.adj_matrix.pop(name)
-        # i = susceptibility.pop(name)
-        i = irradiance.pop(name)
-
-        self.initial()
-
-    def __init__(self):
+    def __init__(self, sample=False):
         # n denotes the number of districts or nodes in the graph
         # which is 9 in our case
         self.n = 0
@@ -207,37 +180,45 @@ class transmission_graph:
 
         for place in regions:
             self.adj_matrix[place] = []
+        if sample:
+            self.initial()
+    
+    # This function initialises the graph with sample nodes and stores weights between each node of the graph
+    def initial(self):
+        # Iterate over each node in the graph
+        for i in regions.keys():
+            # Iterate over all the neighbours
+            for j in regions.keys():
+                if i != j:
+                    self.adj_matrix[i].append([j, calc_weight(i, j)])
 
-        self.initial()
+        # Also assign the susceptibility value of each node
+        # for i in regions.keys():
+        #     susceptibility[i] = (i, calc_susceptibility(i))
 
-        self.remove_node("A")
-        self.remove_node("B")
-        self.remove_node("C")
-        self.remove_node("D")
-        self.remove_node("E")
-        self.remove_node("F")
-        self.remove_node("G")
-        self.remove_node("H")
-        self.remove_node("I")
+    # Function to remove a region node. You have to just pass the name of the region(string) to be removed
+    def remove_node(self, name):
+        i = regions.pop(name)
+        i = rain.pop(name)
+        i = humid.pop(name)
+        i = temp.pop(name)
+        i = self.adj_matrix.pop(name)
+        # i = susceptibility.pop(name)
+        i = irradiance.pop(name)
 
     # Function to add a new region node
     # You have to pass (region name(string), x coordinate(float), y coordinate(float), temperature, rainfall, humidity)
-
     def add_node(self, name, x, y, t1, r1, h1, i1):
         self.adj_matrix[name] = []
-
         regions[name] = [x, y]
         temp[name] = t1
         rain[name] = r1
         humid[name] = h1
         irradiance[name] = i1
-
         self.n = self.n + 1
-
         self.initial()
 
     # Function to modify the edge weight between two regions
-
     def change_weight(self, r1, r2, wt):
         for nbr in self.adj_matrix[r1]:
             if nbr[0] == r2:
@@ -256,8 +237,6 @@ class transmission_graph:
         Sn = np.array(sn)
         Sn = Sn.transpose()
         decay = find_decay()
-
         x = np.matmul(decay, E)
         y = np.matmul(x, Sn)
-
         return y
