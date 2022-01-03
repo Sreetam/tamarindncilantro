@@ -171,16 +171,16 @@ class transmission_graph:
         # stores the weight of the edge between ith and jth node
         self.adj_matrix = {}
 
-        self.E = [[np.random.random(), np.random.random(), np.random.random(), np.random.random()],
+        self.E = []
+        if sample:
+            self.E = [[np.random.random(), np.random.random(), np.random.random(), np.random.random()],
                   [np.random.random(), np.random.random(),
                    np.random.random(), np.random.random()],
                   [np.random.random(), np.random.random(),
                    np.random.random(), np.random.random()],
                   [np.random.random(), np.random.random(), np.random.random(), np.random.random()]]
-
-        for place in regions:
-            self.adj_matrix[place] = []
-        if sample:
+            for place in regions:
+                self.adj_matrix[place] = []
             self.initial()
     
     # This function initialises the graph with sample nodes and stores weights between each node of the graph
