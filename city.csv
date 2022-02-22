@@ -1,6 +1,5 @@
 city,06/24/2009,06/30/2009,07/08/2009,08/17/2009
-Niagara,Ab,Ab,Ab,yes
-Orleans ,Ab,yes,yes,yes
+Niagara,Ab,Ab,Ab,ye
 Genesee,Ab,yes,yes,yes
 Wyoming,Ab,Ab,Ab,yes
 Erie,Ab,yes,yes,yes
@@ -17,11 +16,9 @@ Schuyler,Ab,Ab,Ab,yes
 Chemung,Ab,Ab,Ab,Ab
 Tioga,Ab,Ab,Ab,yes
 Tompkins,yes,yes,yes,yes
-Cayuga ,Ab,Ab,Ab,Ab
 Seneca,Ab,Ab,Ab,yes
 Onondaga,Ab,Ab,yes,yes
 Cortland,Ab,yes,yes,yes
-ST. Lawrence,Ab,Ab,yes,yes
 Jefferson,Ab,yes,yes,yes
 Oswego,Ab,Ab,Ab,yes
 Oneida,Ab,Ab,yes,yes
@@ -54,11 +51,9 @@ Putnam,Ab,Ab,Ab,yes
 Orange,Ab,yes,yes,yes
 Westchester,Ab,Ab,yes,yes
 Rockland,Ab,Ab,Ab,yes
-new york city ,Ab,Ab,Ab,no
 Nassau,Ab,Ab,Ab,yes
 Suffolk,Ab,yes,yes,yes
 richmond,Ab,Ab,Ab,Ab
 queens,Ab,Ab,Ab,Ab
 kings,Ab,Ab,Ab,no
 bronx,Ab,Ab,Ab,Ab
-new jersey,Ab,Ab,Ab,yes
